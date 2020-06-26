@@ -1,0 +1,30 @@
+Overview
+
+Using the approximate 60000 features about the genome counts, I'll do clustering analysis on them to see if there are any groups in the data.  Some sort of clustering to find subgroups.  Also PCA maybe to see if i can visualize things nicer.  Check python scanpy package for more ideas.
+
+After finding subgroups, I will conduct the same survival analysis on each group, to see if there are any significant differences between the subgroups. Check python lifelines package for more ideas. 
+
+I will define the survival in terms of days_to_death and days_to_last_follow_up.  If a person has a days_to_death, that means they're dead.  If a person only has a days_to_last_follow_up, that means we knew they were alive for at least that long, and after that we'll censor them I guess (still not sure if i'm using that word right).  There are only 12 people in the dataset that don't have a last follow up or a death date, so I will consider them outliers and remove them.
+
+I'll draw the KM curves to get an idea of survival between the groups.  I'll also try regression with variables Age at diagnosis, tumorstage, and gender to see if they effect the survival at all.  John suggested Cox regression for this specifically, so I'll probably try that.  I'll do the usual checking if the regression coefficients are significant or not to see if any of them have an effect on the survival.  And if any of the coefficients in the groups are significantly different with each other, to see if different groups are affected differently by the factors.
+
+Assumptions
+
+We are assuming that there are subgroups in the data that we can find through clustering techniques.
+
+Survival has to be nonnegative.  For days_to_last_follow_up, we know they were alive at that time.  After that day, we have no idea if they're still dead or alive.  So it's a good idea to use survival analysis.
+
+Justifications
+
+Other people found clusters I can try my best too.
+
+Some people have both a last follow up date and death date.  The last follow up date is always less than death date.  So the assumption seems fair.
+
+Might need to test Cox regression assumptions, lifelines has a guide on how to do that.
+
+Evaluation:
+
+The python packages have plots!  I'll use those!
+
+I'll determine if the groups have different survival times maybe by mean survival times.  Maybe by checking the approximate survival function to see if they're significantly different.  Maybe by checking those KM curves too.  Also the regression coefficients for other differences between groups.  
+
