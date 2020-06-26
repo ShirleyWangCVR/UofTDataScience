@@ -1,0 +1,26 @@
+((*- extends 'article.tplx' -*))
+
+% I dunno how to get rid of the output prompts yet
+% jupyter nbconvert --to pdf  --template=custom.tplx <name>.ipynb --TemplateExporter.exclude_output_prompt=True
+
+% No file title and date at top
+((* block maketitle *))((* endblock maketitle *))
+
+% margin adjustment
+((*- block margins -*))
+    \geometry{verbose, tmargin=2.0cm, bmargin=2.0cm, lmargin=2.0cm, rmargin=2.0cm}
+((*- endblock margins -*))
+
+
+% Block code cells
+((* block input_group *))
+    ((*- if cell.metadata.get('nbconvert', {}).get('show_code', False) -*))
+        ((( super() )))
+    ((*- endif -*))
+((* endblock input_group *))
+
+% Turns off numbering for sections
+((* block commands *))
+\setcounter{secnumdepth}{0} 
+((( super() )))
+((* endblock commands *))
